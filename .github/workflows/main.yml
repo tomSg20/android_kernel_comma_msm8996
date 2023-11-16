@@ -18,7 +18,7 @@ jobs:
       run: |
         mkdir -p ~/linux/linux
         mkdir -p ~/linux/build_out
-        python3 make_linux.py -a arm64 -k ~/linux/experiment.config -s ~/linux/linux -o ~/linux/build_out -c gcc-4.9
+        python3 make_linux.py -a arm64 -k arch/arm64/configs/comma_defconfig -s ~/linux/linux -o ~/linux/build_out -c gcc-4.9
 
     - name: Package Kernel
       run: |
