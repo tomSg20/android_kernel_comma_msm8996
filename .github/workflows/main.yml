@@ -16,10 +16,8 @@ jobs:
 
     - name: Compile Kernel
       run: |
-        mkdir -p ~/linux/linux
         mkdir -p ~/linux/build_out
-        python3 make_linux.py -a arm64 -k arch/arm64/configs/comma_defconfig -s ~/linux/linux -o ~/linux/build_out -c gcc-4.9
-
+        python3 make_linux.py -a arm64 -k arch/arm64/configs/comma_defconfig -s $PWD  -o ~/linux/build_out -c gcc-4.9 -- -j5
     - name: Package Kernel
       run: |
         mkdir -p ~/linux/linux/pack
