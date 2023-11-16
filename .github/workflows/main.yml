@@ -22,9 +22,9 @@ jobs:
 
     - name: Package Kernel
       run: |
-        mkdir -p ${HOME}/kernel
-        cp arch/arm64/boot/Image ${HOME}/kernel/
-        cp arch/arm64/boot/dts/*.dtb ${HOME}/kernel/
+        mkdir -p ~/linux/linux/pack
+        cp arch/arm64/boot/Image ~/linux/linux/pack
+        cp arch/arm64/boot/dts/*.dtb  ~/linux/linux/pack
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
