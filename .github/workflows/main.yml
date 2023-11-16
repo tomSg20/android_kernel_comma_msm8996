@@ -1,0 +1,33 @@
+name: Compile Linux Kernel
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sh build_containers.sh
+
+    - name: Compile Kernel
+      run: |
+        mkdir -p ~/linux/linux
+        mkdir -p ~/linux/build_out
+        python3 make_linux.py -a arm64 -k ~/linux/experiment.config -s ~/linux/linux -o ~/linux/build_out -c gcc-4.9
+
+    - name: Package Kernel
+      run: |
+        mkdir -p ${HOME}/kernel
+        cp arch/arm64/boot/Image ${HOME}/kernel/
+        cp arch/arm64/boot/dts/*.dtb ${HOME}/kernel/
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: kernel-artifacts
+        path: ${{HOME}}/kernel
