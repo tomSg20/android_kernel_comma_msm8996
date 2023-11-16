@@ -12,22 +12,13 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential libncurses-dev bison flex libssl-dev
-
-    - name: Download Linux Kernel source
-      run: git clone https://github.com/commaai/android_kernel_comma_msm8996.git
-          
-    - name: Change directory to kernel source
-      run: cd android_kernel_comma_msm8996
-
-    - name: Configure Kernel
-      run: |
-        make ARCH=arm64 defconfig
-        # You can customize the kernel configuration here if needed
+        sh build_containers.sh
 
     - name: Compile Kernel
-      run: make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+      run: |
+        mkdir -p ~/linux/linux
+        mkdir -p ~/linux/build_out
+        python3 make_linux.py -a arm64 -k ~/linux/experiment.config -s ~/linux/linux -o ~/linux/build_out -c gcc-4.9
 
     - name: Package Kernel
       run: |
