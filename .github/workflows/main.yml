@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
 
     steps:
     - name: Checkout repository
@@ -12,6 +12,9 @@ jobs:
 
     - name: Install dependencies
       run: |
+        apt-get update && \
+        apt-get install -y -q apt-utils dialog  python && \
+        apt-get install -y -q sudo aptitude flex bison libncurses5-dev make git exuberant-ctags sparse bc libssl-dev libelf-dev         
         git clone https://github.com/GrowtopiaJaw/aarch64-linux-android-4.9.git -b google --single-branch aarch64-linux-android-4.9
         export PATH=$PWD/aarch64-linux-android-4.9/bin:$PATH
         export CROSS_COMPILE=aarch64-linux-android-
