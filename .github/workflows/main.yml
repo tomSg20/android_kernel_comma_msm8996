@@ -12,12 +12,16 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sh build_containers.sh
+        git clone https://github.com/GrowtopiaJaw/aarch64-linux-android-4.9.git -b google --single-branch aarch64-linux-android-4.9
+        export PATH=$PWD/aarch64-linux-android-4.9/bin:$PATH
+        export CROSS_COMPILE=aarch64-linux-android-
+        export ARCH=arm64
+        export SUBARCH=arm64
+
 
     - name: Compile Kernel
       run: |
-        mkdir -p ~/linux/build_out
-        python3 make_linux.py -a arm64 -k arch/arm64/configs/defconfig -s $PWD  -o ~/linux/build_out -c gcc-4.9 -- -j5
+        make defconfig
     - name: Package Kernel
       run: |
         mkdir -p ~/linux/linux/pack
